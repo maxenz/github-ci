@@ -2,8 +2,9 @@ name: CI
 
 on: 
   push:
-    branches:
-      - master
+    branches: [ master ]      
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
@@ -15,7 +16,7 @@ jobs:
         node-version: [10.x]
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -34,9 +35,9 @@ jobs:
       run: |
         yarn run build --if-present
 
-    - name: Add remote origin
-      run: |
-        git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-    - name: Deploy to Heroku
-      run: |
-        git push heroku HEAD:master -f
+    # - name: Add remote origin
+    #   run: |
+    #     git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+    # - name: Deploy to Heroku
+    #   run: |
+    #     git push heroku HEAD:master -f
